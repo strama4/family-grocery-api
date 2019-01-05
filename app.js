@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
+const sessions = require('express-session');
+const passportConfig = require('./config/passport-config');
 
 var usersRouter = require('./routes/users');
 var listsRouter = require('./routes/lists');
@@ -15,7 +17,12 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(sessions({
+  secret: 'This is a secret',
+  cookie: {maxAge: 1.21e+9}
+}))
+
+passportConfig.init(app);
 
 app.use('/users', usersRouter);
 app.use('/lists', listsRouter);

@@ -7,10 +7,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     items: {
       type: DataTypes.ARRAY(DataTypes.JSON)
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {});
   List.associate = function(models) {
     // associations can be defined here
+    List.belongsTo(models.User, {
+      foreignKey: 'userId',
+      onDelete: 'CASCADE'
+    })
   };
   return List;
 };
