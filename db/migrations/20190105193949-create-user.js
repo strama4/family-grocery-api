@@ -13,7 +13,8 @@ module.exports = {
         validate: {
           isEmail: {msg: 'Must be a valid email'}
         },
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       password: {
         type: Sequelize.STRING,
