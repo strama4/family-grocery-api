@@ -5,12 +5,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
 const sessions = require('express-session');
-const passportConfig = require('./config/passport-config');
+const passport = require('passport');
+
 
 var usersRouter = require('./routes/users');
 var listsRouter = require('./routes/lists');
 
 var app = express();
+
+require('./config/passport-config');
 
 app.use(cors());
 app.use(logger('dev'));
@@ -21,8 +24,7 @@ app.use(sessions({
   secret: 'This is a secret',
   cookie: {maxAge: 1.21e+9}
 }))
-
-passportConfig.init(app);
+app.use(passport.initialize());
 
 app.use('/users', usersRouter);
 app.use('/lists', listsRouter);
