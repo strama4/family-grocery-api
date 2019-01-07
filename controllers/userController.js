@@ -58,10 +58,6 @@ module.exports = {
         passport.authenticate('login', (err, user, info) => {
             if (err) {
                 console.log(err);
-            }
-            if (info !== undefined) {
-                console.log(info.message);
-                res.json(info.message);
             } else {
                 req.logIn(user, err => {
                     User.findOne({
@@ -83,7 +79,7 @@ module.exports = {
 
     findUser(req, res, next) {
         passport.authenticate('jwt', { session: false }, (err, user, info) => {
-            if (err) {
+            if (err || !user) {
                 console.log(err);
             }
              else {
