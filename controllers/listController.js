@@ -9,5 +9,16 @@ module.exports = {
                 res.json(lists);
             }
         })
+    },
+
+    getUserLists(req, res, next) {
+        
+        listQueries.getUserLists(req.params.id, (err, lists) => {
+            if (err) {
+                res.send(err);
+            } else {
+                res.json(lists);
+            }
+        })
     }
 }

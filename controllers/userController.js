@@ -46,7 +46,13 @@ module.exports = {
                         })
                         .then(() => {
                             console.log('user created in db');
-                            res.status(200).send({ message: 'user created' })
+                            const token = jwt.sign({ id: user.email }, jwtSecret.secret);
+                            res.status(200).json({ 
+                                auth: true,
+                                token: token,
+                                user, user,
+                                message: 'user created' 
+                            })
                         })
                     })
                 })
@@ -69,7 +75,8 @@ module.exports = {
                         res.status(200).json({
                             auth: true,
                             token: token,
-                            message: 'user found & logged in'
+                            message: 'user found & logged in',
+                            user: user
                         })
                     })
                 })
@@ -88,7 +95,8 @@ module.exports = {
                     auth: true,
                     email: user.email,
                     password: user.password,
-                    message: 'user found in db'
+                    message: 'user found in db',
+                    userId: user.id
                 })
             }
         })(req, res, next);

@@ -9,5 +9,15 @@ module.exports = {
             .catch(err => {
                 callback(err);
             });
+    },
+
+    getUserLists(user, callback) {
+        List.findAll({ where: {userId: user}})
+        .then(lists => {
+                callback(null, lists)
+            })
+            .catch(err => {
+                callback(err);
+            })
     }
 }
