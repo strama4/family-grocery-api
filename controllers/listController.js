@@ -10,9 +10,7 @@ module.exports = {
             }
         })
     },
-
     getUserLists(req, res, next) {
-        
         listQueries.getUserLists(req.params.id, (err, lists) => {
             if (err) {
                 res.send(err);
@@ -20,5 +18,15 @@ module.exports = {
                 res.json(lists);
             }
         })
+    },
+    addToList(req, res, next) {
+        listQueries.addItem(req.params.listId, req.body, (err, list) => {
+            if (err) {
+                res.send(err);
+            } else {
+                res.json(list);
+            }
+        })
     }
+
 }

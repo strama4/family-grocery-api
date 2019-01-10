@@ -18,7 +18,12 @@ module.exports = (sequelize, DataTypes) => {
     List.belongsTo(models.User, {
       foreignKey: 'userId',
       onDelete: 'CASCADE'
-    })
+    });
+
+    List.hasMany(models.Collaborator, {
+      foreignKey: 'listId',
+      as: 'collaborators'
+    });
   };
   return List;
 };
