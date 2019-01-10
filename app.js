@@ -7,7 +7,6 @@ const cors = require('cors');
 const sessions = require('express-session');
 const passport = require('passport');
 
-
 var usersRouter = require('./routes/users');
 var listsRouter = require('./routes/lists');
 

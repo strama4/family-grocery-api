@@ -19,14 +19,5 @@ module.exports = {
             }
         })
     },
-    addToList(req, res, next) {
-        listQueries.addItem(req.params.listId, req.body, (err, list) => {
-            if (err) {
-                res.send(err);
-            } else {
-                res.json(list);
-            }
-        })
-    }
 
 }

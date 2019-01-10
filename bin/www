@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-
+const listQueries = require('../db/queries.lists');
 var app = require('../app');
 var debug = require('debug')('api:server');
 var http = require('http');
@@ -20,7 +20,24 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+const io = require('socket.io')(server);
 
+io.on('connection', client => {
+  console.log('Connected to client', client.id);
+
+  client.on('message', (data) => {
+    const newItem = {item: data.item,
+                    completed: data.completed}
+    console.log(newItem)
+    listQueries.addItem(data.listId, newItem, (err, list) => {
+      if (err) {
+        console.log(err);
+      } else {
+        io.sockets.emit('updatedTasks', list);
+      }
+    })
+  })
+})
 /**
  * Listen on provided port, on all network interfaces.
  */

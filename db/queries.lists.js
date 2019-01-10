@@ -1,3 +1,4 @@
+const sequelize = require('../db/models/index').sequelize;
 const List = require('../db/models').List;
 const User = require('../db/models').User;
 const Collaborator = require('../db/models').Collaborator;
@@ -41,14 +42,19 @@ module.exports = {
     },
 
     addItem(listId, newItem, callback) {
-        console.log('GET HEE')
-        // error is occuring within List.update
         List.update({
-            'items': sequelize.fn('array_append', sequelize.col('items'), newItem)},
+            'items': sequelize.fn('array_append', sequelize.col('items'), JSON.stringify(newItem))},
             { 'where': {'id': listId}
         })
-        .then(list => {
-            callback(null, list);
+        .then(addedCount => {
+            if (addedCount) {
+                List.findByPk(listId)
+                .then(list => {
+                    callback(null, list);
+                })
+            } else {
+                
+            }
         })
         .catch(err => {
             callback(err);
