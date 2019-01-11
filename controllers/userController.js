@@ -50,7 +50,7 @@ module.exports = {
                             res.status(200).json({ 
                                 auth: true,
                                 token: token,
-                                user, user,
+                                user: user,
                                 message: 'user created' 
                             })
                         })
@@ -76,7 +76,7 @@ module.exports = {
                             auth: true,
                             token: token,
                             message: 'user found & logged in',
-                            user: user
+                            userId: user.id
                         })
                     })
                 })
