@@ -13,8 +13,17 @@ var listsRouter = require('./routes/lists');
 var app = express();
 
 require('./config/passport-config');
-
-app.use(cors());
+var whitelist = ['http://strama-family-grocery.herokuapps.com']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
