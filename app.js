@@ -13,7 +13,7 @@ var listsRouter = require('./routes/lists');
 var app = express();
 
 require('./config/passport-config');
-var whitelist = ['http://strama-family-grocery.herokuapp.com']
+var whitelist = ['https://5c3a2985970afae7d6620cdf--laughing-wright-421c4b.netlify.com']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
