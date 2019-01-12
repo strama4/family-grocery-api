@@ -5,9 +5,6 @@ module.exports = (sequelize, DataTypes) => {
      type: DataTypes.STRING,
       allowNull: false
     },
-    items: {
-      type: DataTypes.ARRAY(DataTypes.JSON)
-    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -24,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'listId',
       as: 'collaborators'
     });
+
+    List.hasMany(models.Item, {
+      foreignKey: 'listId',
+      as: 'items'
+    })
   };
   return List;
 };

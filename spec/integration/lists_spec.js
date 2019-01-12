@@ -22,10 +22,6 @@ describe('Routes : Lists', () => {
                 
                 List.create({ 
                     title: 'Grocery list',
-                    items: [
-                        {item: '2 Apples', completed: false},
-                        {item: '3 stalks of celery', completed: false}
-                    ],
                     userId: this.user.id
                 })
                 .then(list => {
@@ -50,32 +46,11 @@ describe('Routes : Lists', () => {
         });
     });
 
-    describe('GET /lists/:userId', () => {
+    describe('GET /lists/:id', () => {
         it('should render a list where user is owner of list', (done) => {
-            request.get(`${base}/${this.user.id}`, (err, res, body) => {
-                expect(body).toContain('Grocery list');
+            request.get(`${base}/${this.list.id}`, (err, res, body) => {
+                expect(res).toContain('Grocery list');
                 done();
-            });
-        });
-
-        it('should render a list where user is collaborator of list', (done) => {
-            User.create({
-                email: 'johnnysfriend@gmail.com',
-                password: 'johnnyismybestfriend'
-            })
-            .then(user => {
-                this.collab = user;
-
-                Collaborator.create({
-                    userId: this.collab.id,
-                    listId: this.list.id
-                })
-                .then(collab => {
-                    request.get(`${base}/${this.collab.id}`, (err, res, body) => {
-                        expect(body).toContain('Grocery list');
-                        done();
-                    });                    
-                });
             });
         });
     });

@@ -42,12 +42,12 @@ describe('Routes : Collaborators', () => {
         });
     });
 
-    describe('POST lists/:id/collaborators/create', () => {
-        it('should add a collaborator to the associated list and user objects', (done) => {
+    // describe('POST lists/:id/collaborators/create', () => {
+    //     it('should add a collaborator to the associated list and user objects', (done) => {
             
-            const options = {
-                url: `${base}/${this.user.id}`
-            }
-        })
-    })
+    //         const options = {
+    //             url: `${base}/${this.user.id}`
+    //         }
+    //     })
+    // })
 });

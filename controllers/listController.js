@@ -10,8 +10,8 @@ module.exports = {
             }
         })
     },
-    getUserLists(req, res, next) {
-        listQueries.getUserLists(req.params.id, (err, lists) => {
+    getList(req, res, next) {
+        listQueries.getList(req.params.id, (err, lists) => {
             if (err) {
                 res.send(err);
             } else {

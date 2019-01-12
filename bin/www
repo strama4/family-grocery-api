@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 const listQueries = require('../db/queries.lists');
+const itemQueries = require('../db/queries.items');
 var app = require('../app');
 var debug = require('debug')('api:server');
 var http = require('http');
@@ -26,9 +27,19 @@ io.on('connection', client => {
   console.log('Connected to client', client.id);
 
   client.on('addedItem', (data) => {
-    const newItem = {item: data.item,
-                    completed: data.completed}
-    listQueries.addItem(data.listId, newItem, (err, list) => {
+    const newItem = {description: data.description,
+                    listId: data.listId}
+    itemQueries.addItem(newItem, (err, list) => {
+      if (err) {
+        console.log(err);
+      } else {
+        io.sockets.emit('updatedTasks', list);
+      }
+    })
+  })
+  
+  client.on('deletedItem', (item) => {
+    itemQueries.deleteItem(item, (err, list) => {
       if (err) {
         console.log(err);
       } else {
@@ -37,7 +48,38 @@ io.on('connection', client => {
     })
   })
 
+  client.on('updateItem', (item) => {
+    itemQueries.updateItem(item, (err, list) => {
+      if (err) {
+        console.log(err);
+      } else {
+        io.sockets.emit('updatedTasks', list);
+      }
+    })
+  })
   
+  client.on('addedList', (newList) => {
+    listQueries.addList(newList, (err, lists) => {
+      if (err) {
+        console.log(err);
+      } else {
+        const userLists = lists.filter(list => newList.userId === list.userId);
+        io.sockets.emit('updatedUserLists', userLists);
+      }
+    })
+  }),
+
+  client.on('getUserList', (user) => {
+    listQueries.findLists((err, lists) => {
+      if (err) {
+        //do something here
+      } else {
+        const userLists = lists.filter(list => user === list.userId);
+        io.sockets.emit('updatedUserLists', userLists)
+      }
+    })
+    
+  })
 })
 /**
  * Listen on provided port, on all network interfaces.

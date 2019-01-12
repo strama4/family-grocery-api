@@ -23,14 +23,11 @@ describe('List', () => {
     });
 
     describe('#create()', () => {
-        it('should create a new list of items to purchase', (done) => {
+        it('should create a new list object', (done) => {
             List.create({
                 title: 'Groceries',
-                items: [
-                    {item: '2 Apples', completed: false},
-                    {item: '3 stalks of celery', completed: false},
-                ],
                 userId: this.user.id
+                
             })
             .then(list => {
                 expect(list).not.toBeNull();
@@ -46,10 +43,7 @@ describe('List', () => {
 
         it('should not create a list without a title', (done) => {
             List.create({
-                items: [
-                    {item: '2 Apples', completed: false},
-                    {item: '3 stalks of celery', completed: false},
-                ]
+                userId: this.user.id
             })
             .then(list => {
                 done();
@@ -63,10 +57,6 @@ describe('List', () => {
         it('shouldn\'t create a List without a User', (done) => {
             List.create({
                 title: 'Groceries',
-                items: [
-                    {item: '2 Apples', completed: false},
-                    {item: '3 stalks of celery', completed: false},
-                ]
             })
             .then(list => {
                 done();
