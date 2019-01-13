@@ -48,7 +48,6 @@ module.exports = {
     },
 
     updateItem(item, callback) {
-        console.log(item)
         Item.findByPk(parseInt(item.item.id))
         .then(itemInDB => itemInDB.update({
             complete: item.item.status,
@@ -57,8 +56,7 @@ module.exports = {
         .then(() => {
             List.findByPk(item.listId, { include: [
                 {model: Item, as: 'items'}
-            ]
-            })
+            ]})
             .then(list => {
                 callback(null, list);
             })

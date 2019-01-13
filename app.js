@@ -13,7 +13,7 @@ var listsRouter = require('./routes/lists');
 var app = express();
 
 require('./config/passport-config');
-var whitelist = ['https://laughing-wright-421c4b.netlify.com', 'https://localhost:3000']
+var whitelist = ['https://laughing-wright-421c4b.netlify.com', 'http://localhost:3000']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
