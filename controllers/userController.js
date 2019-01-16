@@ -6,23 +6,6 @@ const jwtSecret = require('../config/jwtConfig');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
-    createUser(req, res, next) {
-        const newUser = {
-            email: req.body.email,
-            password: req.body.password,
-            confirmPassword: req.body.confirmPassword
-        }
-
-        userQueries.createUser(newUser, (err, user) => {
-            if (err) {
-                console.log(err)
-                res.status(500).send(err.errors);
-            } else {
-                res.status(200).send('User creation worked');
-            }
-        })
-    },
-
     registerUser(req, res, next) {
         passport.authenticate('register', (err, user, info) => {
             if (err) {

@@ -38,6 +38,7 @@ describe('Routes : Lists', () => {
 
     describe('GET /lists', () => {
         it('should render a list with all of the grocery lists', (done) => {
+            request.
             request.get(base, (err, res, body) => {
                 expect(res.statusCode).toBe(200);
                 expect(body).toContain('Grocery list');
@@ -49,9 +50,13 @@ describe('Routes : Lists', () => {
     describe('GET /lists/:id', () => {
         it('should render a list where user is owner of list', (done) => {
             request.get(`${base}/${this.list.id}`, (err, res, body) => {
-                expect(res).toContain('Grocery list');
+                expect(body).toContain('Grocery list');
                 done();
             });
         });
     });
+
+    describe('POST /lists/:id/add', () => {
+
+    })
 });

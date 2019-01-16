@@ -65,7 +65,7 @@ describe('Item', () => {
             .catch(err => {
                 expect(err.message).toContain('Item.listId cannot be null')
                 done();
-            })
-        })
+            });
+        });
     });
 });
