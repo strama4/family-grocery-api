@@ -1,4 +1,4 @@
-const app = require('../../app');
+const server = require('../../bin/www');
 const request = require('request');
 const base = 'http://localhost:5000/users';
 
@@ -40,11 +40,11 @@ describe('Routes : Users', () => {
                 form: {
                     email: 'johnnysfriend@gmail.com',
                     password: '123456789',
-                    passwordConfirmation: '123456789'
+                    confirmPassword: '123456789'
                 }
             }
             request.post(options, (err, res, body) => {
-                expect(res.status).not.toBeNull();
+                expect(res.statusCode).not.toBeNull();
                 User.findOne({ 
                     where: { email: 'johnnysfriend@gmail.com'}
                 })

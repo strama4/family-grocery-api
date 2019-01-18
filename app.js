@@ -13,9 +13,10 @@ var listsRouter = require('./routes/lists');
 var app = express();
 
 require('./config/passport-config');
-var whitelist = ['https://laughing-wright-421c4b.netlify.com', 'http://localhost:3000']
+var whitelist = ['https://laughing-wright-421c4b.netlify.com', 'http://localhost:3000', undefined]
 var corsOptions = {
   origin: function (origin, callback) {
+    console.log('origin', origin)
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
@@ -38,13 +39,14 @@ if (process.env.NODE_ENV === 'test') {
   const mockAuth = require('./spec/support/mock-auth.js');
   mockAuth.fakeIt(app);
 }
+
 app.use('/users', usersRouter);
 app.use('/lists', listsRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+  app.use(function(req, res, next) {
+    next(createError(404));
+  });
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -54,7 +56,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  // res.render('error');
 });
 
 module.exports = app;

@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
     registerUser(req, res, next) {
+        console.log('got here')
         passport.authenticate('register', (err, user, info) => {
             if (err) {
                 console.log(err);
