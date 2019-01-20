@@ -1,6 +1,6 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
-var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
@@ -35,11 +35,6 @@ app.use(sessions({
 }))
 app.use(passport.initialize());
 
-if (process.env.NODE_ENV === 'test') {
-  const mockAuth = require('./spec/support/mock-auth.js');
-  mockAuth.fakeIt(app);
-}
-
 app.use('/users', usersRouter);
 app.use('/lists', listsRouter);
 
@@ -56,7 +51,6 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  // res.render('error');
 });
 
 module.exports = app;
